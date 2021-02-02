@@ -1,5 +1,6 @@
 import Books from '../models/Books';
 import User from '../models/User';
+import File from '../models/File';
 
 import * as Yup from 'yup';
 
@@ -38,7 +39,16 @@ class BooksController {
     return res.json(books);
   }
   async index(req, res) {
-    const book = await Books.findAll();
+    const book = await Books.findAll({
+      attributes: ['id', 'name', 'editora', 'autors', 'avatar_id'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
     return res.json(book);
   }
 }
