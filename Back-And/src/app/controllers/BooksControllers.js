@@ -39,7 +39,7 @@ class BooksController {
   }
   async index(req, res) {
     const book = await Books.findAll();
-    return book;
+    return res.json(book);
   }
 }
 
